@@ -18,7 +18,7 @@
 		    <th>Card Name</th>
 		    <th>Status</th>
 		  </tr>
-		  {% for card in cards['allcards'] %}
+		  {% for card in view_model.items['allcards'] %}
 		  <tr>
 		    <td>{{ card.id }}</td>
 		    <td>{{ card.name }}</td>
@@ -37,7 +37,7 @@
             <form action = "/addcard" method = "POST">
 	           <p>Card Name <input type = "text" name = "new_card_name" /></p>
 			   <p>Status <br>
-				{% for status in cards['all_card_category'] %}
+				{% for status in view_model.items['all_card_category'] %}
 			   <input type = "radio" value= {{ status.name }} name = "status" />{{ status.name }}<br>
 			   {% endfor %}
 			</p>
@@ -54,13 +54,13 @@
 	  	           <p>Card Name from above list to be updated 
 					<input list = "card_name" name = "card_name" />
 					<datalist id = card_name >
-					{% for card in cards['allcards'] %}
+					{% for card in view_model.items['allcards'] %}
 					<option value="{{ card.name }}">
 					{% endfor %}
 					</datalist>
 				   </p>
 					 <p>Status <br>
-						{% for status in cards['all_card_category'] %}
+						{% for status in view_model.items['all_card_category'] %}
 						<input type = "radio" value= {{ status.name }} name = "status" />{{ status.name }}<br>
 						{% endfor %}
 					 </p>

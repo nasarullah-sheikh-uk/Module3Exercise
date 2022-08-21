@@ -17,9 +17,8 @@ trellobid = os.getenv('TrelloBID')
 #####  The default repo has some functions written in ./data/sessions_items.py
 ####   Importing functions written under ./data/sessions_items.py
 #####
-from todo_app.data.trello_items import get_cards
-from todo_app.data.trello_items import add_card
-from todo_app.data.trello_items import update_card
+from todo_app.data.trello_items import get_cards, add_card, update_card
+from todo_app.data.View import ViewModel
 from todo_app.flask_config import Config
 
 app = Flask(__name__)
@@ -37,7 +36,12 @@ def index():
     # It will render a html with two forms and one table
     # It taks a list of objects called items which is a class card 
     # having name, id, status, statusid as properties
-    return render_template('index.html', cards=get_cards(url, trellobid, apikey, apitoken))
+    cards=get_cards(url, trellobid, apikey, apitoken)
+    
+    # Introducing a new class that makes a neat container that makes it really simple 
+    # for the template to access all of the values it needs.
+    item_view_model=ViewModel(cards)
+    return render_template('index.html', view_model=item_view_model)
 
 
 ############################################################################################
