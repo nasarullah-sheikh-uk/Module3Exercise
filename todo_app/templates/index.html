@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+{% block title %}Show Cards App{% endblock %}
+
+{% block content %}
+  <div class="jumbotron">
+    <h1 class="display-4">To-Do App</h1>
+    <p class="lead">Just another to-do app.</p>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Items</h2>
+      <ul class="list-group mb-4">
+        <!-- List the todo items here -->
+        <table style="width:80%">
+		  <tr>
+		    <th>ID</th>
+		    <th>Card Name</th>
+		    <th>Status</th>
+		  </tr>
+		  {% for card in cards['allcards'] %}
+		  <tr>
+		    <td>{{ card.id }}</td>
+		    <td>{{ card.name }}</td>
+		    <td>{{ card.status }}</td>
+		  </tr>
+		  {% endfor %}
+</table>
+      </ul>
+    </div>
+  </div>
+
+   <!-- form added for add card -->
+    <div class="row">
+      <div class="col-md-12">
+      <h2>Add Card</h2>
+            <form action = "/addcard" method = "POST">
+	           <p>Card Name <input type = "text" name = "new_card_name" /></p>
+			   <p>Status <br>
+				{% for status in cards['all_card_category'] %}
+			   <input type = "radio" value= {{ status.name }} name = "status" />{{ status.name }}<br>
+			   {% endfor %}
+			</p>
+	           <p><input type = "submit" value = "Addcard" /></p>
+      		</form>
+      	</div>
+      </div>
+
+     <!-- form added for mark update card -->
+          <div class="row">
+	        <div class="col-md-12">
+	        <h2>Update Card</h2>
+	              <form action = "/updatecard" method = "POST">
+	  	           <p>Card Name from above list to be updated 
+					<input list = "card_name" name = "card_name" />
+					<datalist id = card_name >
+					{% for card in cards['allcards'] %}
+					<option value="{{ card.name }}">
+					{% endfor %}
+					</datalist>
+				   </p>
+					 <p>Status <br>
+						{% for status in cards['all_card_category'] %}
+						<input type = "radio" value= {{ status.name }} name = "status" />{{ status.name }}<br>
+						{% endfor %}
+					 </p>
+	  	           <p><input type = "submit" value = "Updatecard" /></p>
+	        		</form>
+	        	</div>
+      </div>
+{% endblock %}
