@@ -1,5 +1,5 @@
 from flask import session
-import requests, json
+import requests, json, os
 
 # Define a class for Card
 '''
@@ -18,7 +18,7 @@ class Category:
         self.name = name
 
 
-def get_cards(url, trellobid, apikey, apitoken):
+def get_cards():
     """
     Fetches all cards from ToDo list on Trello.
 
@@ -27,7 +27,11 @@ def get_cards(url, trellobid, apikey, apitoken):
         element 1: The list of Cards as objects - cards from all categories on Trello Board on website
         element 2: The list of all categories as objects containing id and name
     """
-    getcardsurl = url+"1/boards/"+trellobid+"/lists?cards=open&key="+apikey+"&token="+apitoken
+    lk=os.environ.get('URL')
+    trellobid = os.environ.get('TrelloBID')
+    apikey = os.getenv('APIKEY') 
+    apitoken = os.getenv('APIToken')
+    getcardsurl = lk+"1/boards/"+trellobid+"/lists?cards=open&key="+apikey+"&token="+apitoken
     headers = {
         'Accept': "application/json"
     }

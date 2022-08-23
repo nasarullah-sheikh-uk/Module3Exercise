@@ -9,6 +9,9 @@ For individual test
 To check which tests are runnable run
 > pytest --collect-only
 
+There is a integeration test with a stub named test_client.y which checks the returned html for O/p- for an API of get cards
+It asserts the names of cards.
+
 # DevOps Apprenticeship: Project Exercise
 
 > If you are using GitPod for the project exercise (i.e. you cannot use your local machine) then you'll want to launch a VM using the [following link](https://gitpod.io/#https://github.com/CorndelWithSoftwire/DevOps-Course-Starter). Note this VM comes pre-setup with Python & Poetry pre-installed.
