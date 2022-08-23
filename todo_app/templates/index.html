@@ -4,21 +4,36 @@
 {% block content %}
   <div class="jumbotron">
     <h1 class="display-4">To-Do App</h1>
-    <p class="lead">Just another to-do app.</p>
+    <p class="lead">Not Just another to-do app.</p>
   </div>
 
   <div class="row">
     <div class="col-md-12">
-      <h2>Items</h2>
+      <h2>Items All and by category</h2>
       <ul class="list-group mb-4">
         <!-- List the todo items here -->
         <table style="width:80%">
+			<tr>
+			  <th style="width:40%">ID</th>
+			  <th style="width:30%">Card Name</th>
+			  <th>Status</th>
+			</tr>
+			{% for card in view_model.items['allcards'] %}
+			<tr>
+			  <td>{{ card.id }}</td>
+			  <td>{{ card.name }}</td>
+			  <td>{{ card.status }}</td>
+			</tr>
+			{% endfor %}
+  </table>
+<br>
+  <table style="width:80%">
 		  <tr>
-		    <th>ID</th>
-		    <th>Card Name</th>
-		    <th>Status</th>
+		    <th style="width:40%">ID</th>
+		    <th style="width:30%">Card Name</th>
+		    <th>Doing</th>
 		  </tr>
-		  {% for card in view_model.items['allcards'] %}
+		  {% for card in view_model.doing_items %}
 		  <tr>
 		    <td>{{ card.id }}</td>
 		    <td>{{ card.name }}</td>
@@ -26,6 +41,38 @@
 		  </tr>
 		  {% endfor %}
 </table>
+
+<table style="width:80%">
+	<tr>
+	  <th style="width:40%">ID</th>
+	  <th style="width:30%">Card Name</th>
+	  <th>To Do</th>
+	</tr>
+	{% for card in view_model.todo_items %}
+	<tr>
+	  <td>{{ card.id }}</td>
+	  <td>{{ card.name }}</td>
+	  <td>{{ card.status }}</td>
+	</tr>
+	{% endfor %}
+</table>
+
+<table style="width:80%">
+	<tr>
+	  <th style="width:40%">ID</th>
+	  <th style="width:30%">Card Name</th>
+	  <th>Done</th>
+	</tr>
+	{% for card in view_model.done_items %}
+	<tr>
+	  <td>{{ card.id }}</td>
+	  <td>{{ card.name }}</td>
+	  <td>{{ card.status }}</td>
+	</tr>
+	{% endfor %}
+</table>
+
+
       </ul>
     </div>
   </div>

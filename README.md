@@ -1,3 +1,14 @@
+# Testing
+There are three unit tests in Tests folder to check the filtering of items/cards happens by Status. There is a seperate test for each status
+On terminal run
+> pytest -s 
+This will show if the filtering passes
+For individual test
+> pytest test_name -s
+
+To check which tests are runnable run
+> pytest --collect-only
+
 # DevOps Apprenticeship: Project Exercise
 
 > If you are using GitPod for the project exercise (i.e. you cannot use your local machine) then you'll want to launch a VM using the [following link](https://gitpod.io/#https://github.com/CorndelWithSoftwire/DevOps-Course-Starter). Note this VM comes pre-setup with Python & Poetry pre-installed.
