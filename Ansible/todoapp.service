@@ -4,4 +4,4 @@ Description=My T-Do App
 [Service]
 User=ec2-user
 WorkingDirectory=/opt/todoapp
-ExecStart=/etc/poetry/bin/poetry run flask run -host 0.0.0.0
+ExecStart=/etc/poetry/bin/poetry run flask run --host 0.0.0.0

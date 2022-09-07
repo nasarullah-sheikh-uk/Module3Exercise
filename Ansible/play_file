@@ -70,10 +70,22 @@
       executable: pip3
     become: yes
   
-  - name: Set the environment
+  - name: Set the environment file
     ansible.builtin.template:
      src: /home/ec2-user/ANS/.env.j2
      dest: /opt/todoapp/.env
      owner: ec2-user 
      mode: 0644
 
+  - name: Set the Flask as deamon
+    ansible.builtin.template:
+     src: /home/ec2-user/ANS/todoapp.service
+     dest: /etc/systemd/system/todoapp.service
+    become: yes
+
+  - name: Run a web service with flask daemon after all is set
+    ansible.builtin.systemd:
+     name: todoapp.service
+     state: restarted
+     daemon_reload: true
+    become: yes
