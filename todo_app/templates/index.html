@@ -85,7 +85,7 @@
 	           <p>Card Name <input type = "text" name = "new_card_name" /></p>
 			   <p>Status <br>
 				{% for status in view_model.items['all_card_category'] %}
-			   <input type = "radio" value= {{ status.name }} name = "status" />{{ status.name }}<br>
+			   <input type = "radio" value= "{{ status.name }}" name = "status" />{{ status.name }}<br>
 			   {% endfor %}
 			</p>
 	           <p><input type = "submit" value = "Addcard" /></p>
@@ -108,7 +108,7 @@
 				   </p>
 					 <p>Status <br>
 						{% for status in view_model.items['all_card_category'] %}
-						<input type = "radio" value= {{ status.name }} name = "status" />{{ status.name }}<br>
+						<input type = "radio" value= "{{ status.name }}" name = "status" />{{ status.name }}<br>
 						{% endfor %}
 					 </p>
 	  	           <p><input type = "submit" value = "Updatecard" /></p>
