@@ -71,7 +71,7 @@ def add_card(title_to_add, list_to_which_added, url, trellobid, apikey, apitoken
     # Fetch all cards to make sure we don't duplicate
     # Get "To DO" list ID
     all_card_list = []
-    cards = get_cards(url, trellobid, apikey, apitoken) # This is a dict of all_cards and categories
+    cards = get_cards() # This is a dict of all_cards and categories
     for card in cards['allcards']:
         all_card_list.append(card.name) # Create a list of all card names
     
@@ -105,7 +105,7 @@ def update_card(title_to_update, list_to_which_added, url, trellobid, apikey, ap
     # Fetch all cards to make sure the card exists
     
     all_card_list = []
-    existing_items = get_cards(url, trellobid, apikey, apitoken)
+    existing_items = get_cards()
     for card in existing_items['allcards']:
         all_card_list.append(card.name) # Create a list of all card names
         if title_to_update == card.name:

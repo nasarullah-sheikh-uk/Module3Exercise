@@ -1,0 +1,91 @@
+---
+- name: Install To Do App on new webserver
+  hosts: managed_hosts
+  remote_user: ec2-user
+
+  vars_prompt:
+    - name: api_key
+      prompt: What is the api key?
+      private: no
+
+    - name: api_token
+      prompt: What is the api token?
+      private: no
+
+    - name: trellobid
+      prompt: What is the trellobid?
+      private: no    
+
+  tasks: 
+  - name: Install git on VM
+    ansible.builtin.yum:
+      name: git
+      state: present
+    become: yes
+
+  - name: Install Python on VM
+    ansible.builtin.yum:
+      name: python
+      state: latest
+    become: yes
+
+  - name: Check Poerty on VM
+    ansible.builtin.shell:
+      cmd: PATH=$PATH:/etc/poetry/bin; which poetry
+    register: poetry_exists
+    failed_when: no
+    changed_when: no
+
+  - name: Install Poetry on VM
+    ansible.builtin.shell:
+      cmd: curl -sSL https://install.python-poetry.org | POETRY_HOME=/etc/poetry python3 -
+    when: poetry_exists.rc != 0
+    become: yes    
+ 
+  - name: Create base directory for To Do App
+    ansible.builtin.file: 
+      path: /opt/todoapp 
+      state: directory 
+      owner: ec2-user 
+      mode: 0774
+      recurse: yes
+    become: yes
+
+  - name: Get the repo from GIT 
+    ansible.builtin.git:
+     repo: 'https://github.com/nasarullah-sheikh-uk/Module3Exercise.git'
+     dest: /opt/todoapp
+     force: yes
+     version: M4Exercise
+
+  - name: Install Flask
+    ansible.builtin.shell:
+      cmd: cd /opt/todoapp; /etc/poetry/bin/poetry install
+    when: poetry_exists.rc == 0
+    become: yes
+
+  - name: Install python dependencies
+    ansible.builtin.pip:
+      name: requests
+      executable: pip3
+    become: yes
+  
+  - name: Set the environment file
+    ansible.builtin.template:
+     src: /home/ec2-user/ANS/.env.j2
+     dest: /opt/todoapp/.env
+     owner: ec2-user 
+     mode: 0644
+
+  - name: Set the Flask as deamon
+    ansible.builtin.template:
+     src: /home/ec2-user/ANS/todoapp.service
+     dest: /etc/systemd/system/todoapp.service
+    become: yes
+
+  - name: Run a web service with flask daemon after all is set
+    ansible.builtin.systemd:
+     name: todoapp.service
+     state: restarted
+     daemon_reload: true
+    become: yes
