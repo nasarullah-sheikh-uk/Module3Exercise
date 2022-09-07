@@ -3,6 +3,19 @@
   hosts: managed_hosts
   remote_user: ec2-user
 
+  vars_prompt:
+    - name: api_key
+      prompt: What is the api key?
+      private: no
+
+    - name: api_token
+      prompt: What is the api token?
+      private: no
+
+    - name: trellobid
+      prompt: What is the trellobid?
+      private: no    
+
   tasks: 
   - name: Install git on VM
     ansible.builtin.yum:
@@ -35,4 +48,32 @@
       state: directory 
       owner: ec2-user 
       mode: 0774
+      recurse: yes
     become: yes
+
+  - name: Get the repo from GIT 
+    ansible.builtin.git:
+     repo: 'https://github.com/nasarullah-sheikh-uk/Module3Exercise.git'
+     dest: /opt/todoapp
+     force: yes
+     version: M4Exercise
+
+  - name: Install Flask
+    ansible.builtin.shell:
+      cmd: cd /opt/todoapp; /etc/poetry/bin/poetry install
+    when: poetry_exists.rc == 0
+    become: yes
+
+  - name: Install python dependencies
+    ansible.builtin.pip:
+      name: requests
+      executable: pip3
+    become: yes
+  
+  - name: Set the environment
+    ansible.builtin.template:
+     src: /home/ec2-user/ANS/.env.j2
+     dest: /opt/todoapp/.env
+     owner: ec2-user 
+     mode: 0644
+
