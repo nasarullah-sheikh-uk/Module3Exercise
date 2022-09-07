@@ -1,3 +1,19 @@
+# Ansible
+There is a Ansible folder which has 
+.env.j2, inventory_file, play_file and todoapp.service files
+
+These need to be copied to Ansible control node, so that the Playbook play_file uses the depndencies at run time.
+
+Step1 - Copy all these files to control node /some/path
+Step2 - Change the references to path in play_file for source
+Step3 - Run the Command -- > #  ansible-playbook /path/play_file -i /path/inventory_file
+this will ask :
+    What is the api key?: <enter yours>
+    What is the api token?: <enter yours>
+    What is the trellobid?: <enter yours>
+Step4 - Check on managed nodes that the webserver is listening on the 5000 port ( netstan -an | grep <port>)
+Step5 - Check the logs on managed node -  journalctl -u todoapp
+
 # Testing
 There are three unit tests in Tests folder to check the filtering of items/cards happens by Status. There is a seperate test for each status
 On terminal run
