@@ -36,7 +36,7 @@ def index():
     # It will render a html with two forms and one table
     # It taks a list of objects called items which is a class card 
     # having name, id, status, statusid as properties
-    cards=get_cards(url, trellobid, apikey, apitoken)
+    cards=get_cards()
     
     # Introducing a new class that makes a neat container that makes it really simple 
     # for the template to access all of the values it needs.
