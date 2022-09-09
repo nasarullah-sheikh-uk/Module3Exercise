@@ -1,5 +1,6 @@
 [Unit]
 Description=My T-Do App
+Requires=todoapp.socket
 
 [Service]
 User=ec2-user

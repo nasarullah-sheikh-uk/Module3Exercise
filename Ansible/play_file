@@ -77,13 +77,19 @@
      owner: ec2-user 
      mode: 0644
 
-  - name: Set the Flask as deamon
+  - name: Set the gunicorn as deamon
     ansible.builtin.template:
      src: /home/ec2-user/ANS/todoapp.service
      dest: /etc/systemd/system/todoapp.service
     become: yes
 
-  - name: Run a web service with flask daemon after all is set
+  - name: Set the gunicorn as socket
+    ansible.builtin.template:
+     src: /home/ec2-user/ANS/todoapp.socket
+     dest: /etc/systemd/system/todoapp.socket
+    become: yes
+
+  - name: Run a web service with gunicorn daemon after all is set
     ansible.builtin.systemd:
      name: todoapp.service
      state: restarted
