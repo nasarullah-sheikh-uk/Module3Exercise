@@ -58,7 +58,7 @@
      force: yes
      version: M4Exercise
 
-  - name: Install Flask
+  - name: Install Flask/ gunicorn
     ansible.builtin.shell:
       cmd: cd /opt/todoapp; /etc/poetry/bin/poetry install
     when: poetry_exists.rc == 0
