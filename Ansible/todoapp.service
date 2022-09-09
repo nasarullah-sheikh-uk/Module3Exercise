@@ -4,9 +4,10 @@ Description=My T-Do App
 [Service]
 User=ec2-user
 WorkingDirectory=/opt/todoapp
-EnvironmentFile=${WorkingDirectory}/.env
-ExecStart=${WorkingDirectory}/.venv/bin/gunicorn \
+EnvironmentFile=/opt/todoapp/.env
+ExecStart=/opt/todoapp/.venv/bin/gunicorn \
             --workers=4 \
-            --log-file=/var/log/todoapp.gunicorn.log \
+            --log-file=/opt/todoapp/todoapp.gunicorn.log \
             --bind=0.0.0.0:8080 \
-            todo_app:app 
+            todo_app.app:app
+
