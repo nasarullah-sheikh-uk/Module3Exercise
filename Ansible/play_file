@@ -56,7 +56,7 @@
      repo: 'https://github.com/nasarullah-sheikh-uk/Module3Exercise.git'
      dest: /opt/todoapp
      force: yes
-     version: M4Exercise
+     version: StrechM4Exercise
 
   - name: Install Flask/ gunicorn
     ansible.builtin.shell:
