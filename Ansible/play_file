@@ -69,6 +69,14 @@
       name: requests
       executable: pip3
     become: yes
+
+# Adding the user todoapp for gunicorn to run
+  - name: Add the user 'todoapp' with no shell
+    ansible.builtin.user:
+      name: todoapp
+      createhome: no
+      shell: /bin/false
+      password: "!"
   
   - name: Set the environment file
     ansible.builtin.template:

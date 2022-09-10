@@ -3,12 +3,23 @@ Description=My T-Do App
 Requires=todoapp.socket
 
 [Service]
-User=ec2-user
+User=todoapp
+PermissionsStartOnly = true
+PIDFile = /run/todoapp/todoapp.pid
+User = todoapp
+ExecStartPre = /bin/mkdir /run/todoapp
+ExecStartPre = /bin/mkdir /var/log/todoapp
+ExecStartPre = /bin/chown -R todoapp /run/todoapp /var/log/todoapp
 WorkingDirectory=/opt/todoapp
 EnvironmentFile=/opt/todoapp/.env
 ExecStart=/opt/todoapp/.venv/bin/gunicorn \
             --workers=4 \
-            --log-file=/opt/todoapp/todoapp.gunicorn.log \
+            --log-file=/var/log/todoapp/todoapp.gunicorn.log \
             --bind=0.0.0.0:8080 \
+            --pid /run/todoapp/todoapp.pid \
             todo_app.app:app
+ExecReload = /bin/kill -s HUP $MAINPID
+ExecStop = /bin/kill -s TERM $MAINPID
+ExecStopPost = /bin/rm -rf /run/todoapp
+PrivateTmp = true
 
