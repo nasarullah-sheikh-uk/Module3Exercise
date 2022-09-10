@@ -76,7 +76,7 @@
       name: todoapp
       createhome: no
       shell: /bin/false
-      password: "!"
+      password: '*'
   
   - name: Set the environment file
     ansible.builtin.template:
