@@ -55,6 +55,7 @@ The project uses a virtual environment to isolate package dependencies. To creat
 ```bash
 $ poetry install
 ```
+It will add the `poetry` command to Poetry's bin directory, generally located at: C:\Users\<USER>\AppData\Roaming\Python\Scripts
 
 You'll also need to clone a new `.env` file from the `.env.template` to store local configuration options. This is a one-time operation on first setup:
 
