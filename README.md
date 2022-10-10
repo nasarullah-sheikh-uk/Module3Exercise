@@ -1,3 +1,62 @@
+# Immutable infrastructure
+For production isntance of application please add gunicorn in dependencies. Running
+> poetry add gunicorn 
+in base local folder will add the dependency to the poetry file. A poetry install will then later install the gunicorn as well
+
+To copy unnecessary files please create a .dockerignore and fill it with all names of files/folders not to be copied into images, e.g.:
+==========================
+.env.template
+.github
+.venv
+.vscode
+Ansible
+Tests
+.gitpod.yml
+.gitignore
+.dockerignore
+.env.test
+.git
+Dockerfile
+==========================
+
+To build base images, go to base of the project which contains the Dockerfile and run
+
+> docker build --target development --tag todo-app:dev .
+> docker build --target production --tag todo-app:prod .
+
+This will build the images for Dev and Prod environments. These are roughly 140MB each.
+
+To start the Production docker listening at 8080 on host :
+> docker run --env-file .env -d -p 8080:5000 --name myappP todo-app:prod
+
+========================================
+.env file contains
+# Flask server configuration.
+FLASK_APP=todo_app/app
+FLASK_ENV=development
+SECRET_KEY=
+URL=https://api.trello.com/
+APIKEY=<>
+APIToken=<>
+TrelloBID=<>
+============================================
+
+Check the docker is up by checking "docker ps" or "docker logs myappP" or just access the webpage 127.0.0.1:8080
+
+Start a shell in the running docker to check:
+>docker exec -it myappP /bin/sh
+1) There are no unnecessary files there ( cd /app; ls -a ; ls -a todo_app)
+2) run top and you will see the gunicorn running
+
+To start the Developement docker listening at 8088 (differnt ports just incase u run both containers on same host for checks at same time) on host :
+> set PWD="PATH to root folder of project"
+e.g
+> set PWD="C:\Users\nasar\Documents\GitHub\Module3Exercise"
+> docker run --env-file .env -d -p 8088:5000 --mount type=bind,source="%PWD%"/todo_app,target=/app/todo_app --name myappD todo-app:dev
+
+Check the docker is up by checking "docker ps" or "docker logs myappD" or just access the webpage 127.0.0.1:8088
+Please note here any change in code will result a change in docker mounted volume and will be changed on web dynamically.
+
 # Ansible
 There is a Ansible folder which has 
 .env.j2, inventory_file, play_file and todoapp.service files
