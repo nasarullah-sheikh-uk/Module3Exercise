@@ -1,0 +1,13 @@
+.env
+.env.template
+.github
+.venv
+.vscode
+Ansible
+Tests
+.gitpod.yml
+.gitignore
+.dockerignore
+.env.test
+.git
+Dockerfile
